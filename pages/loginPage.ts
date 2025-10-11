@@ -36,6 +36,11 @@ export class LoginPage extends BasePage {
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
   }
 
+    async validateIncorrectEmail() {
+    const toast = this.page.getByText('Incorrect Username or Password');
+    await expect(toast).toBeVisible(); // ✅ Waits and verifies
+  }
+
   // Validates that the "Email is required" error toast is visible
   async validateEmailfield() {
     const toast = this.page.getByText('Email is required');

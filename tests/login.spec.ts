@@ -156,5 +156,11 @@ test.describe('POS Backoffice Login', () => {
     expect(passwordValue.trim()).toBe('');
   });
 
-  
+    test('try to login with not registered email', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.openLoginPage();
+    await loginPage.login('abc@abc.lk', 'Asd12345');
+    await loginPage.validateIncorrectEmail();
+
+  })
 });
