@@ -161,6 +161,12 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.openLoginPage();
     await loginPage.login('abc@abc.lk', 'Asd12345');
     await loginPage.validateIncorrectEmail();
-
   })
+
+  test('Validate user without BO login permission', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.openLoginPage();
+    await loginPage.login('56@yopmail.com', '123456789')
+    await loginPage.validateUserWithoutBOLoginPermission();
+});
 });

@@ -54,9 +54,14 @@ export class LoginPage extends BasePage {
   }
 
   // Attempts to login with only spaces in both fields to trigger validation
-  async loginWithSpaces() {
-    await this.usernameField.fill('   ');
-    await this.passwordField.fill('   ');
-    await this.signInButton.click();
-  }
+  // async validateLoginWithSpaces() {
+  //   await this.usernameField.fill('   ');
+  //   await this.passwordField.fill('   ');
+  //   await this.signInButton.click();
+  // }
+
+   async validateUserWithoutBOLoginPermission(){
+    const toast = this.page.locator('div').filter({ hasText: /^Your account has not been granted Back Office sign in access\.$/ });
+    await expect(toast).toBeVisible(); // ✅ Waits and verifies
+   }
 }
