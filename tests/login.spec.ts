@@ -166,7 +166,40 @@ test.describe('POS Backoffice Login', () => {
   test('Validate user without BO login permission', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
-    await loginPage.login('56@yopmail.com', '123456789')
+    await loginPage.login('57@yopmail.com', '123456789')
     await loginPage.validateUserWithoutBOLoginPermission();
 });
+
+  test('Validate Register now button', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.openLoginPage();
+    await loginPage.registerNowButton.click();
+    await expect(page).toHaveURL("https://spbackoffice.nvision.lk/registration_form");
+    });
+
+    test('validate login button with multiple clicks', async ({ page }) => {
+   
+     const loginPage = new LoginPage(page);
+     await loginPage.openLoginPage();
+
+    await loginPage.loginEmail_Password('test09876@mailinator.com', 'Asd12345');
+
+    await loginPage.signInButton.click();
+
+// await page.route("https://spbackoffice.nvision.lk", async (route) => {
+//     console.log('⏳ Mocking slow login response...');
+//     await new Promise(res => setTimeout(res, 10000)); // 2 seconds delay
+//     await route.continue();
+//   });
+
+await page.waitForTimeout(5000);
+
+    const isDisabled = await loginPage.isSignInButtonDisabled();
+    expect(isDisabled).toBeTruthy();
+
+     await page.waitForURL("https://spbackoffice.nvision.lk/home", { timeout: 15000 });
+
+    //await expect(page).toHaveURL("https://spbackoffice.nvision.lk/home");
+      
+  });
 });

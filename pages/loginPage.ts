@@ -10,12 +10,15 @@ export class LoginPage extends BasePage {
   // Locator for the sign-in button
   readonly signInButton
 
+  readonly registerNowButton
+
   // Constructor initializes locators using the provided Playwright Page object
   constructor(page: Page) {
     super(page);
     this.usernameField = page.locator('#username'); // Username input field
     this.passwordField = page.locator('#password'); // Password input field
     this.signInButton = this.page.locator('button:has-text("Sign In")'); // Sign In button
+    this.registerNowButton = page.getByRole('link', { name: 'Register now' });
   }
 
   // Navigates to the login page URL
@@ -64,4 +67,13 @@ export class LoginPage extends BasePage {
     const toast = this.page.locator('div').filter({ hasText: /^Your account has not been granted Back Office sign in access\.$/ });
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
    }
+
+  async isSignInButtonDisabled() {
+    return await this.signInButton.isDisabled();
+  }
+
+  async loginEmail_Password(username: string, password: string) {
+    await this.usernameField.fill(username);
+    await this.passwordField.fill(password);
+  }
 }
