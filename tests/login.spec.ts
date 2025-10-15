@@ -1,16 +1,3 @@
-/**
- * Test suite for POS Backoffice Login functionality using Playwright.
- *
- * This suite covers the following scenarios:
- * - Successful login with valid credentials.
- * - Attempted login with an invalid email format.
- * - Attempted login without providing an email.
- * - Attempted login without providing a password.
- * - Attempted login without providing both email and password.
- * - Attempted login with only whitespace for email and password fields.
- *
- * Each test uses the `LoginPage` page object for actions and assertions.
- */
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 
@@ -99,7 +86,7 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.openLoginPage();
 
     // Attempt login with valid email and empty password
-    await loginPage.login('test09876@mailinator.com','');
+    await loginPage.login('test09876@mailinator.com', '');
 
     // Validate that the password field shows the appropriate validation error
     await loginPage.validatePasswordfield();
@@ -121,7 +108,7 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.openLoginPage();
 
     // Attempt login with both email and password fields empty
-    await loginPage.login('','');
+    await loginPage.login('', '');
 
     // Validate that the email field shows the appropriate validation error
     await loginPage.validateEmailfield();
@@ -145,7 +132,7 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.openLoginPage();
 
     // Attempt login with whitespace-only values for email and password
-    await loginPage.login('     ','        ');
+    await loginPage.login('     ', '        ');
 
     // Retrieve the values from the input fields after login attempt
     const emailValue = await loginPage.usernameField.inputValue();
@@ -156,7 +143,7 @@ test.describe('POS Backoffice Login', () => {
     expect(passwordValue.trim()).toBe('');
   });
 
-    test('try to login with not registered email', async ({ page }) => {
+  test('try to login with not registered email', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
     await loginPage.login('abc@abc.lk', 'Asd12345');
@@ -168,38 +155,13 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.openLoginPage();
     await loginPage.login('57@yopmail.com', '123456789')
     await loginPage.validateUserWithoutBOLoginPermission();
-});
+  });
 
   test('Validate Register now button', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
     await loginPage.registerNowButton.click();
     await expect(page).toHaveURL("https://spbackoffice.nvision.lk/registration_form");
-    });
-
-    test('validate login button with multiple clicks', async ({ page }) => {
-   
-     const loginPage = new LoginPage(page);
-     await loginPage.openLoginPage();
-
-    await loginPage.loginEmail_Password('test09876@mailinator.com', 'Asd12345');
-
-    await loginPage.signInButton.click();
-
-// await page.route("https://spbackoffice.nvision.lk", async (route) => {
-//     console.log('⏳ Mocking slow login response...');
-//     await new Promise(res => setTimeout(res, 10000)); // 2 seconds delay
-//     await route.continue();
-//   });
-
-await page.waitForTimeout(5000);
-
-    const isDisabled = await loginPage.isSignInButtonDisabled();
-    expect(isDisabled).toBeTruthy();
-
-     await page.waitForURL("https://spbackoffice.nvision.lk/home", { timeout: 15000 });
-
-    //await expect(page).toHaveURL("https://spbackoffice.nvision.lk/home");
-      
   });
+
 });

@@ -39,7 +39,7 @@ export class LoginPage extends BasePage {
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
   }
 
-    async validateIncorrectEmail() {
+  async validateIncorrectEmail() {
     const toast = this.page.getByText('Incorrect Username or Password');
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
   }
@@ -56,24 +56,8 @@ export class LoginPage extends BasePage {
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
   }
 
-  // Attempts to login with only spaces in both fields to trigger validation
-  // async validateLoginWithSpaces() {
-  //   await this.usernameField.fill('   ');
-  //   await this.passwordField.fill('   ');
-  //   await this.signInButton.click();
-  // }
-
-   async validateUserWithoutBOLoginPermission(){
+  async validateUserWithoutBOLoginPermission() {
     const toast = this.page.locator('div').filter({ hasText: /^Your account has not been granted Back Office sign in access\.$/ });
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
-   }
-
-  async isSignInButtonDisabled() {
-    return await this.signInButton.isDisabled();
-  }
-
-  async loginEmail_Password(username: string, password: string) {
-    await this.usernameField.fill(username);
-    await this.passwordField.fill(password);
   }
 }
