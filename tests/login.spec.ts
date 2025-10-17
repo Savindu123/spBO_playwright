@@ -164,7 +164,7 @@ test.describe('POS Backoffice Login', () => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
     await loginPage.registerNowButton.click();
-    await expect(page).toHaveURL("https://spbackoffice.nvision.lk/registration_form");
+    await expect(page).toHaveURL(loginPage.baseURL + "registration_form");
   });
 
 });
