@@ -1,3 +1,4 @@
+import { BasePage } from './../pages/basePage';
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 
@@ -20,10 +21,12 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.openLoginPage();
 
     // Perform login with valid credentials
-    await loginPage.login('test09876@mailinator.com', 'Asd12345');
+    //await loginPage.login('test09876@mailinator.com', 'Asd12345');
+
+    await loginPage.login(loginPage.validUsernameLogin, loginPage.validPasswordLogin);
 
     // Verify successful navigation to the home page
-    await expect(page).toHaveURL("https://spbackoffice.nvision.lk/home");
+    await expect(page).toHaveURL(loginPage.baseURL + 'home');
   });
 
   /**

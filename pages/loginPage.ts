@@ -3,6 +3,7 @@ import { BasePage } from './basePage';
 
 // LoginPage class extends the BasePage to encapsulate login page interactions
 export class LoginPage extends BasePage {
+
   // Locators for username and password input fields
   readonly usernameField;
   readonly passwordField;
@@ -23,7 +24,7 @@ export class LoginPage extends BasePage {
 
   // Navigates to the login page URL
   async openLoginPage() {
-    await this.goto('https://spbackoffice.nvision.lk/');
+    await this.goto(this.baseURL);
   }
 
   // Performs login by filling username and password, then clicking the sign-in button

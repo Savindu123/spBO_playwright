@@ -119,7 +119,10 @@ test.describe('POS Backoffice Registration', () => {
         await expect(registrationPage.emptyPasswordValidationMessage).toBeVisible();
 
         // Adding a small delay to ensure the validation message is processed
-        await page.waitForTimeout(1000);
+        //await page.waitForTimeout(1000);
+
+        await registrationPage.waitForDisabledSubmitButton(registrationPage.submitButton);
+
 
         const afterFillingEnabled = await registrationPage.isSubmitButtonEnabled();
         expect(afterFillingEnabled).toBeFalsy();
@@ -137,7 +140,7 @@ test.describe('POS Backoffice Registration', () => {
         await registrationPage.submitButton.click();
 
         // Adding a small delay to ensure the validation message is processed
-        await page.waitForTimeout(1000);
+        await registrationPage.waitForDisabledSubmitButton(registrationPage.submitButton);
 
         // Check if the submit button is disabled when all fields are filled with invalid email
         await expect(registrationPage.emptybusinessnameValidationMessage).toBeVisible();
@@ -159,7 +162,7 @@ test.describe('POS Backoffice Registration', () => {
         await registrationPage.submitButton.click();
 
         // Adding a small delay to ensure the validation message is processed
-        await page.waitForTimeout(1000);
+        await registrationPage.waitForDisabledSubmitButton(registrationPage.submitButton);
 
 
         // Check if the submit button is disabled when all fields are filled with invalid email
@@ -181,12 +184,30 @@ test.describe('POS Backoffice Registration', () => {
         await registrationPage.submitButton.click();
 
         // Adding a small delay to ensure the validation message is processed
-        await page.waitForTimeout(1000);
+        await registrationPage.waitForDisabledSubmitButton(registrationPage.submitButton);
 
         // Check if the submit button is disabled when all fields are filled with invalid email
         await expect(registrationPage.emptybusinesstypeValidationMessage).toBeVisible();
 
         const afterFillingEnabled = await registrationPage.isSubmitButtonEnabled();
         expect(afterFillingEnabled).toBeFalsy();
+    });
+
+    test('validate registration form with all fields filled correctly', async ({ page }) => {
+        const registrationPage = new RegistrationPage(page);
+        await registrationPage.openRegistrationPage();
+        await registrationPage.enterEmail('test' + Date.now() + '@gmail.com');
+        await registrationPage.enterPassword('Asd12345');
+        await registrationPage.enterBusinessName('Test Business');
+        await registrationPage.selectBusinessType('Bar');
+        await registrationPage.selectCountry('Sri Lanka');
+        await registrationPage.checkTermsAndConditions();
+        await registrationPage.submitButton.click();
+
+        await registrationPage.registrationSuccessMessage.waitFor({ state: 'visible' });
+
+
+        // Check if the URL has changed to indicate successful registration        
+        await expect(registrationPage.registrationSuccessMessage).toBeVisible();
     });
 });

@@ -1,4 +1,4 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Page, type Locator } from "@playwright/test";
 import { BasePage } from "./basePage";
 
 export class RegistrationPage extends BasePage {
@@ -21,6 +21,8 @@ export class RegistrationPage extends BasePage {
     readonly businessnameValidationMessage;
 
     readonly emptybusinesstypeValidationMessage;
+
+    readonly registrationSuccessMessage;
 
 
 
@@ -47,11 +49,11 @@ export class RegistrationPage extends BasePage {
 
         this.emptybusinesstypeValidationMessage = page.getByText('Business type is required');
 
-
+        this.registrationSuccessMessage = page.getByRole('heading', { name: 'Thank you for registering!' });
     }
 
     async openRegistrationPage() {
-        await this.goto('https://spbackoffice.nvision.lk/registration_form');
+        await this.goto(this.baseURL + 'registration_form');
     }
 
     async isSubmitButtonEnabled() {
@@ -107,4 +109,8 @@ export class RegistrationPage extends BasePage {
         await expect(toast).toBeVisible(); // ✅ Waits and verifies
     }
 
+    async waitForDisabledSubmitButton(locator: Locator) {
+        // Wait until the element is disabled using Playwright's assertion helper
+        await expect(locator).toBeDisabled({ timeout: 10000 });
+    }
 }
