@@ -89,7 +89,7 @@ test.describe('POS Backoffice Registration', () => {
     test('validate registration form with all fields filled with already registered email', async ({ page }) => {
         const registrationPage = new RegistrationPage(page);
         await registrationPage.openRegistrationPage();
-        await registrationPage.enterEmail('test09876@mailinator.com');// already registered email
+        await registrationPage.enterEmail(registrationPage.validUsernameLogin);// already registered email
         await registrationPage.enterPassword('Asd12345');
         await registrationPage.enterBusinessName('Test Business');
         await registrationPage.selectBusinessType('Bar');
