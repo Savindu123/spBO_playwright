@@ -8,10 +8,20 @@ export class LoginPage extends BasePage {
   readonly usernameField;
   readonly passwordField;
 
+  // Locator for the eye icon to toggle password visibility
+  readonly eyeIcon;
+
   // Locator for the sign-in button
   readonly signInButton
 
+  // Locator for the "Register now" link/button
   readonly registerNowButton
+
+  // Locator for the "Forgot Password?" link/button
+  readonly forgotPasswordButton;
+
+  readonly resetPasswordPageTitle;
+
 
   // Constructor initializes locators using the provided Playwright Page object
   constructor(page: Page) {
@@ -20,6 +30,9 @@ export class LoginPage extends BasePage {
     this.passwordField = page.locator('#password'); // Password input field
     this.signInButton = this.page.locator('button:has-text("Sign In")'); // Sign In button
     this.registerNowButton = page.getByRole('link', { name: 'Register now' });
+    this.eyeIcon = page.locator('svg'); // Eye icon for password visibility toggle
+    this.forgotPasswordButton = page.getByRole('link', { name: 'Forgot Password?' });// Forgot Password link
+    this.resetPasswordPageTitle = page.getByRole('heading', { name: 'Reset Password' });
   }
 
   // Navigates to the login page URL
@@ -32,6 +45,10 @@ export class LoginPage extends BasePage {
     await this.usernameField.fill(username);
     await this.passwordField.fill(password);
     await this.signInButton.click();
+  }
+
+  async enterPassword(password: string) {
+    await this.passwordField.fill(password);
   }
 
   // Validates that the "Invalid Username or Password" error toast is visible
@@ -61,4 +78,17 @@ export class LoginPage extends BasePage {
     const toast = this.page.locator('div').filter({ hasText: /^Your account has not been granted Back Office sign in access\.$/ });
     await expect(toast).toBeVisible(); // ✅ Waits and verifies
   }
+
+  async clickEyeIcon() {
+    await this.eyeIcon.click();
+  }
+
+  async getPasswordFieldType() {
+    return await this.passwordField.getAttribute('type');
+  }
+
+  async clickForgotPassword() {
+    await this.forgotPasswordButton.click();
+  }
+
 }

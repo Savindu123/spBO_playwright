@@ -167,4 +167,27 @@ test.describe('POS Backoffice Login', () => {
     await expect(page).toHaveURL(loginPage.baseURL + "registration_form");
   });
 
+  test('Validate password visibility Eye icon', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.openLoginPage();
+    await loginPage.enterPassword(loginPage.validPasswordLogin);
+
+    // Initially, the password field type should be 'password'
+    expect(await loginPage.getPasswordFieldType()).toBe('password');
+
+    // Click the eye icon to toggle password visibility
+    await loginPage.eyeIcon.click();
+
+    // After clicking, the password field type should be 'text'
+    expect(await loginPage.getPasswordFieldType()).toBe('text');
+  });
+
+  test('Validate Forgot Password link', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.openLoginPage();
+    await loginPage.clickForgotPassword();
+
+    // Verify navigation to the Reset Password page
+    await loginPage.resetPasswordPageTitle.waitFor({ state: 'visible' });
+  });
 });
