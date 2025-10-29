@@ -8,6 +8,8 @@ export class ForgotPasswordPage extends BasePage {
     readonly backToLoginButton;
     readonly incorrectEmailValidationMessage;
     readonly invalidEmailValidationMessage;
+    readonly accessGrantedEmailValidationMessage;
+    readonly emptyEmailValidationMessage;
 
     constructor(page: Page) {
         super(page);
@@ -16,7 +18,17 @@ export class ForgotPasswordPage extends BasePage {
         this.emailField = page.getByRole('textbox', { name: 'Email address' });
         this.resetButton = page.getByRole('button', { name: 'Reset' });
         this.backToLoginButton = page.getByRole('link', { name: 'Back to Login' });
-        this.incorrectEmailValidationMessage = page.getByText('Incorrect User Name or Email');
-        this.invalidEmailValidationMessage = page.getByText('Please enter a valid email');
+        this.incorrectEmailValidationMessage = page.getByText('//div[@class = "login-error"]/font');
+        this.invalidEmailValidationMessage = page.locator('//div[@class = "login-error"]/font');
+        this.emptyEmailValidationMessage = page.getByText('Email is required');
+        this.accessGrantedEmailValidationMessage = page.getByText('Access Granted. Please check your email for password reset instructions.');
+    }
+    async openForgotPasswordPage() {
+        await this.goto(this.baseURL + 'reset_password');
+    }
+
+    async resetPassword(email: string) {
+        await this.emailField.fill(email);
+        await this.resetButton.click();
     }
 }

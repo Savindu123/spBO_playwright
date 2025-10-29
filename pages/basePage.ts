@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page, TestInfo, expect } from '@playwright/test';
 
 // BasePage class provides common methods for interacting with web pages using Playwright
 export class BasePage {
@@ -10,6 +10,13 @@ export class BasePage {
   readonly validUsernameLogin: string;
   readonly validPasswordLogin: string;
 
+  readonly invalidUsernameLogin: string;
+  readonly invalidPasswordLogin: string;
+
+  readonly incorrectEmailLogin: string;
+
+
+
 
   // Constructor initializes the BasePage with a Playwright Page instance
   constructor(page: Page) {
@@ -19,12 +26,18 @@ export class BasePage {
     this.validUsernameLogin = 'test09876@mailinator.com';
     this.validPasswordLogin = 'Asd12345';
 
+    this.invalidUsernameLogin = 'test@com';
+    this.invalidPasswordLogin = '   ';
+
+    this.incorrectEmailLogin = 'Go@gmail.lk';
+
   }
 
   // Navigates to the specified URL
   async goto(baseURL: string) {
     await this.page.goto(baseURL);
   }
+
 
   // Clicks on an element specified by the locator string (CSS or XPath)
   async click(locator: string) {
@@ -40,4 +53,14 @@ export class BasePage {
   async verifyURLContains(path: string) {
     await expect(this.page).toHaveURL(this.baseURL);
   }
+
+  async verifyToastMessage(actual: string, expected: string, testInfo: TestInfo) {
+    await testInfo.attach('Toast Verification', {
+      body: `Expected: ${expected}\nActual: ${actual}`,
+      contentType: 'text/plain',
+    });
+
+    expect(actual, `Actual toast message: "${actual}"`).toBe(expected);
+  }
+
 }
