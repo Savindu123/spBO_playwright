@@ -51,34 +51,6 @@ export class LoginPage extends BasePage {
     await this.passwordField.fill(password);
   }
 
-  // Validates that the "Invalid Username or Password" error toast is visible
-  async validateInvalidEmail() {
-    const toast = this.page.getByText('Invalid Username or Password');
-    await expect(toast).toBeVisible(); // ✅ Waits and verifies
-  }
-
-  async validateIncorrectEmail() {
-    const toast = this.page.getByText('Incorrect Username or Password');
-    await expect(toast).toBeVisible(); // ✅ Waits and verifies
-  }
-
-  // Validates that the "Email is required" error toast is visible
-  async validateEmailfield() {
-    const toast = this.page.getByText('Email is required');
-    await expect(toast).toBeVisible(); // ✅ Waits and verifies
-  }
-
-  // Validates that the "Password is required" error toast is visible
-  async validatePasswordfield() {
-    const toast = this.page.getByText('Password is required');
-    await expect(toast).toBeVisible(); // ✅ Waits and verifies
-  }
-
-  async validateUserWithoutBOLoginPermission() {
-    const toast = this.page.locator('div').filter({ hasText: /^Your account has not been granted Back Office sign in access\.$/ });
-    await expect(toast).toBeVisible(); // ✅ Waits and verifies
-  }
-
   async clickEyeIcon() {
     await this.eyeIcon.click();
   }

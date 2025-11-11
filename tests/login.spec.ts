@@ -1,6 +1,7 @@
 import { BasePage } from './../pages/basePage';
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
+import { ForgotPasswordPage } from '../pages/forgotPasswordPage';
 
 test.describe('POS Backoffice Login', () => {
 
@@ -48,18 +49,11 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.login('test0987ailinator.com', 'Asd12345');
 
     // Validate that the email field shows the appropriate validation error
-    await loginPage.validateInvalidEmail();
+    //await loginPage.validateInvalidEmail();
+    await expect(page.getByText('Invalid Username or Password')).toBeVisible();
+
   });
 
-  /**
-   * Test: Attempted login without providing an email.
-   *
-   * Steps:
-   * 1. Instantiate the LoginPage page object.
-   * 2. Open the login page.
-   * 3. Attempt to log in with an empty email and a valid password.
-   * 4. Assert that the email field validation is triggered.
-   */
   test('Try to login without email', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
@@ -70,18 +64,11 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.login('', 'Asd12345');
 
     // Validate that the email field shows the appropriate validation error
-    await loginPage.validateEmailfield();
+    await expect(page.getByText('Email is required')).toBeVisible();
+    ;
   });
 
-  /**
-   * Test: Attempted login without providing a password.
-   *
-   * Steps:
-   * 1. Instantiate the LoginPage page object.
-   * 2. Open the login page.
-   * 3. Attempt to log in using a valid email but leave the password field empty.
-   * 4. Assert that the password field validation is triggered (e.g., error message is shown).
-   */
+
   test('Try to login without password', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
@@ -91,19 +78,10 @@ test.describe('POS Backoffice Login', () => {
     // Attempt login with valid email and empty password
     await loginPage.login('test09876@mailinator.com', '');
 
-    // Validate that the password field shows the appropriate validation error
-    await loginPage.validatePasswordfield();
+    await expect(page.getByText('Password is required')).toBeVisible()
   });
 
-  /**
-   * Test: Attempted login without providing both email and password.
-   *
-   * Steps:
-   * 1. Instantiate the LoginPage page object.
-   * 2. Open the login page.
-   * 3. Attempt to log in with both email and password fields empty.
-   * 4. Assert that both email and password field validations are triggered.
-   */
+
   test('Try to login without email/password', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
@@ -114,19 +92,12 @@ test.describe('POS Backoffice Login', () => {
     await loginPage.login('', '');
 
     // Validate that the email field shows the appropriate validation error
-    await loginPage.validateEmailfield();
-    // Validate that the password field shows the appropriate validation error
-    await loginPage.validatePasswordfield();
+    await expect(page.getByText('Email is required')).toBeVisible();
+    await expect(page.getByText('Password is required')).toBeVisible();
   });
 
   /**
    * Test: Attempted login with only whitespace for email and password fields.
-   *
-   * Steps:
-   * 1. Instantiate the LoginPage page object.
-   * 2. Open the login page.
-   * 3. Attempt to log in with whitespace-only values for email and password.
-   * 4. Assert that the input fields are trimmed and treated as empty.
    */
   test('Try to login with spaces for email & password', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -150,14 +121,18 @@ test.describe('POS Backoffice Login', () => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
     await loginPage.login('abc@abc.lk', 'Asd12345');
-    await loginPage.validateIncorrectEmail();
+    await expect(page.getByText('Incorrect Username or Password')).toBeVisible();
+
   })
 
-  test('Validate user without BO login permission', async ({ page }) => {
+  test('Validate user without BO login permission', async ({ page }, testInfo) => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
-    await loginPage.login('57@yopmail.com', '123456789')
-    await loginPage.validateUserWithoutBOLoginPermission();
+    await loginPage.login(loginPage.accessDeniedEmailLoginBO, loginPage.accessDeniedPasswordLogin);
+    await expect(page.getByText('Your account has not been granted Back Office sign in access')).toBeVisible();
+
+
+
   });
 
   test('Validate Register now button', async ({ page }) => {

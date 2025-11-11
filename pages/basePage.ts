@@ -13,6 +13,14 @@ export class BasePage {
   readonly invalidUsernameLogin: string;
   readonly invalidPasswordLogin: string;
 
+  readonly emptyEmailLogin: string;
+
+  readonly accessDeniedEmailLogin: string;
+
+
+  readonly accessDeniedEmailLoginBO: string;
+  readonly accessDeniedPasswordLogin: string;
+
   readonly incorrectEmailLogin: string;
 
 
@@ -28,6 +36,14 @@ export class BasePage {
 
     this.invalidUsernameLogin = 'test@com';
     this.invalidPasswordLogin = '   ';
+
+    this.emptyEmailLogin = '';
+
+    this.accessDeniedEmailLogin = '901@yopmail.com';
+
+
+    this.accessDeniedEmailLoginBO = '57@yopmail.com';
+    this.accessDeniedPasswordLogin = '123456789';
 
     this.incorrectEmailLogin = 'Go@gmail.lk';
 
@@ -54,7 +70,7 @@ export class BasePage {
     await expect(this.page).toHaveURL(this.baseURL);
   }
 
-  async verifyToastMessage(actual: string, expected: string, testInfo: TestInfo) {
+  async verifyToastMessage(actual: any, expected: string, testInfo: TestInfo) {
     await testInfo.attach('Toast Verification', {
       body: `Expected: ${expected}\nActual: ${actual}`,
       contentType: 'text/plain',
