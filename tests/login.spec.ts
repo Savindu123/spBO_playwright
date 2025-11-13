@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 import { ForgotPasswordPage } from '../pages/forgotPasswordPage';
 
-test.describe('POS Backoffice Login', () => {
+test.describe('Verify Login function', () => {
 
 
   /**

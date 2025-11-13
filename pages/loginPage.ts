@@ -57,7 +57,7 @@ export class LoginPage extends BasePage {
 
   async getPasswordFieldType() {
     return await this.passwordField.getAttribute('type');
-  }
+  } n
 
   async clickForgotPassword() {
     await this.forgotPasswordButton.click();

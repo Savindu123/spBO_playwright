@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { RegistrationPage } from '../pages/registrationPage';
 
-test.describe('POS Backoffice Registration', () => {
+test.describe('Verify Registration function', () => {
 
     test('validate registration form with empty fields', async ({ page }) => {
 

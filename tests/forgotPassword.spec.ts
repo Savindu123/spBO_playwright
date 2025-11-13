@@ -84,8 +84,7 @@ test.describe('Verify Forgot Password function', () => {
         await expect(forgotPasswordPage.successEmailResetMessage).toBeVisible();
 
         const actualMessage = (await forgotPasswordPage.successEmailResetMessage.textContent())?.trim() ?? '';
-        // const expectedMessage = '<b>test09876@mailinator.com</b>';
-        // await forgotPasswordPage.verifyToastMessage(actualMessage, expectedMessage, testInfo);
+
 
 
     });

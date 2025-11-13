@@ -1,6 +1,5 @@
 import { expect, Page, type Locator } from "@playwright/test";
 import { BasePage } from "./basePage";
-import { LoginPage } from "./loginPage";
 
 export class ForgotPasswordPage extends BasePage {
     readonly emailField;
