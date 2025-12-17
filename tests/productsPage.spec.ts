@@ -80,5 +80,12 @@ test.describe('Verify Product form functions', () => {
     });
 
 
-});
 
+    test('Verify to Add product with valid details', async ({ page }) => {
+
+        const basePage = new BasePage(page);
+        const loginPage = new LoginPage(page);
+        const productPage = new ProductPage(page);
+
+    });
+});
