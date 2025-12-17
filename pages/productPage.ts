@@ -8,6 +8,7 @@ export class ProductPage extends BasePage {
     readonly addProductButton;
     readonly addProductFormTitle;
     readonly productFormSaveButton;
+    readonly ProductNameInputField;
 
 
     constructor(page: Page) {
@@ -17,6 +18,8 @@ export class ProductPage extends BasePage {
         this.addProductButton = page.locator('//a[@id="add_product_btn"]');
         this.addProductFormTitle = page.locator('//h3[normalize-space()="Add products"]');
         this.productFormSaveButton = page.getByRole('button', { name: 'Save' });
+        this.ProductNameInputField = page.locator('//input[@id="pdcts_namms"]');
+
     }
 
 }

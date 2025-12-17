@@ -79,13 +79,53 @@ test.describe('Verify Product form functions', () => {
 
     });
 
-
-
-    test('Verify to Add product with valid details', async ({ page }) => {
-
+    test('Verify to Add product with Spaces for product name', async ({ page }) => {
         const basePage = new BasePage(page);
         const loginPage = new LoginPage(page);
         const productPage = new ProductPage(page);
 
+        // Navigate to the login page
+        await loginPage.openLoginPage();
+
+        // Perform login with valid credentials
+        await loginPage.login(loginPage.validUsernameLogin, loginPage.validPasswordLogin);
+
+        //Navigate to Product Page
+        await page.goto(basePage.baseURL + 'product_list');
+
+        // Click on Add Product button
+        const AddProductButton = productPage.addProductButton;
+        await AddProductButton.click();
+
+        //Fill Product details with spaces
+        const ProductNameInputField = productPage.ProductNameInputField;
+        await ProductNameInputField.fill('     ');
+
+        //Verify Error messsage
+        await expect(page.locator('//small[normalize-space()="Product name is required"]')).toBeVisible();
     });
+
+    // test('Verify to Add product with valid details', async ({ page }) => {
+
+    //     const basePage = new BasePage(page);
+    //     const loginPage = new LoginPage(page);
+    //     const productPage = new ProductPage(page);
+
+    //     // Navigate to the login page
+    //     await loginPage.openLoginPage();
+
+    //     // Perform login with valid credentials
+    //     await loginPage.login(loginPage.validUsernameLogin, loginPage.validPasswordLogin);
+
+    //     //Navigate to Product Page
+    //     await page.goto(basePage.baseURL + 'product_list');
+
+    //     // Click on Add Product button
+    //     const AddProductButton = productPage.addProductButton;
+    //     await AddProductButton.click();
+
+    //     //Fill Product details
+    //     await page.fill('input#product_name', 'Test Product');
+
+    // });
 });
