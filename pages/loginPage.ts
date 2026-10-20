@@ -10,8 +10,6 @@ export class LoginPage extends BasePage {
 
   // Locator for the eye icon to toggle password visibility
   readonly eyeIcon;
-
-  // Locator for the sign-in button
   readonly signInButton
 
   // Locator for the "Register now" link/button
@@ -26,18 +24,18 @@ export class LoginPage extends BasePage {
   // Constructor initializes locators using the provided Playwright Page object
   constructor(page: Page) {
     super(page);
-    this.usernameField = page.locator('#username'); // Username input field
-    this.passwordField = page.locator('#password'); // Password input field
-    this.signInButton = this.page.locator('button:has-text("Sign In")'); // Sign In button
-    this.registerNowButton = page.getByRole('link', { name: 'Register now' });
-    this.eyeIcon = page.locator('svg'); // Eye icon for password visibility toggle
-    this.forgotPasswordButton = page.getByRole('link', { name: 'Forgot Password?' });// Forgot Password link
-    this.resetPasswordPageTitle = page.getByRole('heading', { name: 'Reset Password' });
+    this.usernameField = page.getByRole('textbox', { name: 'Email' }); // Username input field
+    this.passwordField = page.getByRole('textbox', { name: 'Password' }); // Password input field
+    this.signInButton = page.getByRole('button', { name: 'Sign in' }); // Sign In button
+    this.registerNowButton = page.getByRole('button', { name: 'Create an account' });
+    this.eyeIcon = page.locator('form').getByRole('button').filter({ hasText: /^$/ }); // Eye icon for password visibility toggle
+    this.forgotPasswordButton = page.getByRole('button', { name: 'Forgot password?' });// Forgot Password link
+    this.resetPasswordPageTitle = page.getByRole('heading', { name: 'Forgot your password?' });
   }
 
   // Navigates to the login page URL
   async openLoginPage() {
-    await this.goto(this.baseURL);
+    await this.goto(this.baseURL + '/login');
   }
 
   // Performs login by filling username and password, then clicking the sign-in button

@@ -22,12 +22,10 @@ test.describe('Verify Login function', () => {
     await loginPage.openLoginPage();
 
     // Perform login with valid credentials
-    //await loginPage.login('test09876@mailinator.com', 'Asd12345');
-
     await loginPage.login(loginPage.validUsernameLogin, loginPage.validPasswordLogin);
 
     // Verify successful navigation to the home page
-    await expect(page).toHaveURL(loginPage.baseURL + 'home');
+    await expect(page).toHaveURL(loginPage.baseURL + '/home');
   });
 
   /**
@@ -46,11 +44,13 @@ test.describe('Verify Login function', () => {
     await loginPage.openLoginPage();
 
     // Attempt login with invalid email format
-    await loginPage.login('test0987ailinator.com', 'Asd12345');
+    //await loginPage.login('test0987ailinator.com', 'Asd12345');
+    await loginPage.login(loginPage.invalidUsernameLogin, loginPage.validPasswordLogin);
+
 
     // Validate that the email field shows the appropriate validation error
     //await loginPage.validateInvalidEmail();
-    await expect(page.getByText('Invalid Username or Password')).toBeVisible();
+    await expect(page.getByText('Incorrect Username or Password')).toBeVisible();
 
   });
 
@@ -61,7 +61,7 @@ test.describe('Verify Login function', () => {
     await loginPage.openLoginPage();
 
     // Attempt login with empty email and valid password
-    await loginPage.login('', 'Asd12345');
+    await loginPage.login('', loginPage.validPasswordLogin);
 
     // Validate that the email field shows the appropriate validation error
     await expect(page.getByText('Email is required')).toBeVisible();
@@ -76,7 +76,7 @@ test.describe('Verify Login function', () => {
     await loginPage.openLoginPage();
 
     // Attempt login with valid email and empty password
-    await loginPage.login('test09876@mailinator.com', '');
+    await loginPage.login(loginPage.validUsernameLogin, '');
 
     await expect(page.getByText('Password is required')).toBeVisible()
   });
@@ -130,16 +130,13 @@ test.describe('Verify Login function', () => {
     await loginPage.openLoginPage();
     await loginPage.login(loginPage.accessDeniedEmailLoginBO, loginPage.accessDeniedPasswordLogin);
     await expect(page.getByText('Your account has not been granted Back Office sign in access')).toBeVisible();
-
-
-
   });
 
   test('Validate Register now button', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();
     await loginPage.registerNowButton.click();
-    await expect(page).toHaveURL(loginPage.baseURL + "registration_form");
+    await expect(page).toHaveURL(loginPage.baseURL + "/registration");
   });
 
   test('Validate password visibility Eye icon', async ({ page }) => {

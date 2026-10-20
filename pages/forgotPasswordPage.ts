@@ -20,12 +20,12 @@ export class ForgotPasswordPage extends BasePage {
         this.backToLoginButton = page.getByRole('link', { name: 'Back to Login' });
         this.incorrectEmailValidationMessage = page.locator('//div[@class = "login-error"]/font');
         this.invalidEmailValidationMessage = page.locator('//div[@class = "login-error"]/font');
-        this.emptyEmailValidationMessage = page.getByText('//div[@class = "login-error"]/font');
-        this.accessGrantedEmailValidationMessage = page.getByText('//div[@class = "login-error"]/font'); //Access Granted. Please check your email for password reset instructions.
-        this.successEmailResetMessage = page.getByText('//form//section//p[1]/font');
+        this.emptyEmailValidationMessage = page.locator('//div[@class = "login-error"]/font');
+        this.accessGrantedEmailValidationMessage = page.locator('//div[@class = "login-error"]/font'); //Access Granted. Please check your email for password reset instructions.
+        this.successEmailResetMessage = page.locator('//form//section//p[1]/font');
     }
     async openForgotPasswordPage() {
-        await this.goto(this.baseURL + 'reset_password');
+        await this.goto(this.baseURL + '/reset_password');
     }
 
     async resetPassword(email: string) {

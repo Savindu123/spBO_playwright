@@ -67,7 +67,7 @@ export class RegistrationPage extends BasePage {
      * Navigate to the registration page relative to the configured base URL.
      */
     async openRegistrationPage(): Promise<void> {
-        await this.goto(this.baseURL + 'registration_form');
+        await this.goto(this.baseURL + '/registration');
     }
 
     /**
