@@ -29,10 +29,10 @@ export class BasePage {
   // Constructor initializes the BasePage with a Playwright Page instance
   constructor(page: Page) {
     this.page = page;
-    this.baseURL = 'https://spbackoffice.nvision.lk/app';
+    this.baseURL = 'https://sandbox.salesplaypos.com/app';
 
-    this.validUsernameLogin = 'newinv@gmail.com';
-    this.validPasswordLogin = '123456789';
+    this.validUsernameLogin = 'savindu2@gmail.com';
+    this.validPasswordLogin = '12345678';
 
     this.invalidUsernameLogin = 'test@com';
     this.invalidPasswordLogin = '   ';
@@ -42,7 +42,7 @@ export class BasePage {
     this.accessDeniedEmailLogin = '901@yopmail.com';
 
 
-    this.accessDeniedEmailLoginBO = '57@yopmail.com';
+    this.accessDeniedEmailLoginBO = 'nobo@yopmail.com';
     this.accessDeniedPasswordLogin = '123456789';
 
     this.incorrectEmailLogin = 'Go@gmail.lk';

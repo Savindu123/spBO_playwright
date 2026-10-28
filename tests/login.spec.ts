@@ -154,6 +154,23 @@ test.describe('Verify Login function', () => {
     expect(await loginPage.getPasswordFieldType()).toBe('text');
   });
 
+  /**
+   * Test: Login page loads within an acceptable time.
+   * Measures time from navigation start until the login form is visible.
+   */
+  test('Validate login page loading time', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const maxLoadTimeMs = 6000;
+
+    const start = Date.now();
+    await loginPage.openLoginPage();
+    await loginPage.usernameField.waitFor({ state: 'visible' });
+    const loadTimeMs = Date.now() - start;
+
+    console.log(`Login page load time: ${loadTimeMs} ms`);
+    expect(loadTimeMs).toBeLessThan(maxLoadTimeMs);
+  });
+
   test('Validate Forgot Password link', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.openLoginPage();

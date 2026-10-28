@@ -16,7 +16,7 @@ test.describe('Verify Forgot Password function', () => {
         await expect(forgotPasswordPage.emptyEmailValidationMessage).toBeVisible();
 
         const actualMessage = (await forgotPasswordPage.emptyEmailValidationMessage.textContent())?.trim() ?? '';
-        const expectedMessage = 'Please enter your email address';
+        const expectedMessage = 'Email is required';
 
         await forgotPasswordPage.verifyToastMessage(actualMessage, expectedMessage, testInfo);
 
